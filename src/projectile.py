@@ -1,6 +1,6 @@
 class Projectile:
-    def __init__(self, spawnPoint, speed, color):
-        self.position = spawnPoint
+    def __init__(self, spawn_point, speed, color):
+        self.position = spawn_point
         self.lifeTime = 0
         self.speed = speed
         self.color = color
