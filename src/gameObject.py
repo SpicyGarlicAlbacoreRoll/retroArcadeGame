@@ -1,4 +1,5 @@
 import pygame
+import random
 
 class GameObject:
     def __init__(self, surface, position, screen):
@@ -33,8 +34,15 @@ class Player(GameObject):
             self.position[1] -= self.speed * dt
 
 
-
 class Enemy(GameObject):
     def __init__(self, surface, position, screen, speed):
         GameObject.__init__(self, surface, position, screen)
         self.speed = speed
+
+    def update(self, dt):
+        GameObject.update(self, dt)
+        self.position[1] += self.speed * dt
+
+        if self.position[1] > self.screen[1]:
+            self.position[1] = -128
+            self.position[0] = random.randint(0, self.screen[0])
