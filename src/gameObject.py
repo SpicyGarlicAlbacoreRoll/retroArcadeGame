@@ -5,10 +5,10 @@ class GameObject:
     def __init__(self, surface, position, screen):
         self.surface = surface
         self.rect = self.surface.get_rect()
-        self.rect.x = position[0]
-        self.rect.y = position[1]
-        self.rect.width = surface.get_width()
-        self.rect.height = surface.get_height()
+        self.rect.x = position[0] + 5   # Offset for hit-boxes
+        self.rect.y = position[1] + 5
+        self.rect.width = surface.get_width() - 10
+        self.rect.height = surface.get_height() - 10
         self.position = position
         self.dt = 0
         self.screen = screen
@@ -58,6 +58,12 @@ class Enemy(GameObject):
 class Projectile(GameObject):
     def __init__(self, surface, position, screen, speed, color):
         GameObject.__init__(self, surface, position, screen)
+        # self.position[0] = random.randint(0, self.screen[0])
+        # self.position[1] = 32
+        # self.rect.x = position[0]
+        # self.rect.y = position[1]
+        self.rect.width = surface.get_width()
+        self.rect.height = surface.get_height()
         self.lifeTime = 0
         self.speed = speed
         self.color = color
@@ -66,4 +72,4 @@ class Projectile(GameObject):
     def update(self, dt):
         GameObject.update(self, dt)
         self.lifeTime += dt
-        self.position -= self.speed * dt
+        self.position[1] += self.speed * dt
