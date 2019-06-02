@@ -49,8 +49,11 @@ while running:
     player.update(deltaTime)
     enemy.update(deltaTime)
 
-    if player.position[1] <= enemy.position[1]:
-        player.position[0] = 200
+    # if player.position[1] <= enemy.position[1]:
+    if player.rect.colliderect(enemy.rect):
+        print("THAT'S A HIT")
+        # print("colliding")
+        player.position[0] = 100
         player.position[1] = 150
 
         enemy.position[1] = -64

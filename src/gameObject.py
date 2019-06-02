@@ -4,12 +4,19 @@ import random
 class GameObject:
     def __init__(self, surface, position, screen):
         self.surface = surface
+        self.rect = self.surface.get_rect()
+        self.rect.x = position[0]
+        self.rect.y = position[1]
+        self.rect.width = surface.get_width()
+        self.rect.height = surface.get_height()
         self.position = position
         self.dt = 0
         self.screen = screen
 
     def update(self, dt):
         self.dt = dt
+        self.rect.x = self.position[0]
+        self.rect.y = self.position[1]
 
 
 class Player(GameObject):
@@ -46,3 +53,17 @@ class Enemy(GameObject):
         if self.position[1] > self.screen[1]:
             self.position[1] = -128
             self.position[0] = random.randint(0, self.screen[0])
+
+
+class Projectile(GameObject):
+    def __init__(self, surface, position, screen, speed, color):
+        GameObject.__init__(self, surface, position, screen)
+        self.lifeTime = 0
+        self.speed = speed
+        self.color = color
+        self.dt = 0
+
+    def update(self, dt):
+        GameObject.update(self, dt)
+        self.lifeTime += dt
+        self.position -= self.speed * dt
