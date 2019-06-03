@@ -1,5 +1,6 @@
 import pygame, random
 from gameObject import Player, Enemy, Projectile
+from gameManager import GameManager
 
 pygame.init()
 display = width, height = 400, 300
@@ -25,7 +26,7 @@ playerShip = pygame.image.load('../assets/playerShip.png')
 playerShip = pygame.transform.scale(playerShip, (32, 32))
 player = Player(playerShip, playerPos, display, playerSpeed)
 
-enemies = []
+game_objects = [player]
 
 for n in range(10):
     enemyShip = pygame.image.load('../assets/enemyShip00.png')
@@ -33,15 +34,16 @@ for n in range(10):
     randomSpeed = random.randint(50, 250)
     randomPosX = random.randint(0, width)
     e = Enemy(enemyShip, [randomPosX, -128], display, randomSpeed)
-    enemies.append(e)
-#
-# enemy = Enemy(enemyShip, [64, -128], display, 100)
-
+    game_objects.append(e)
+    
 projectileImg = pygame.image.load("../assets/projectile00.png")
 projectileImg = pygame.transform.scale(projectileImg, (16, 16))
 projectile = Projectile(projectileImg, [64, -128], display, 50, DEEP_BLUE)
-# main loop
 
+game_objects.append(projectile)
+
+game_manager = GameManager(game_objects, display)
+# main loop
 
 while running:
     for event in pygame.event.get():
@@ -54,30 +56,8 @@ while running:
     getTicksLastFrame = t
 
     gameDisplay.fill(WARM_WHITE)
-    gameDisplay.blit(player.surface, player.position)
-    # gameDisplay.blit(enemy.surface, enemy.position)
-    gameDisplay.blit(projectile.surface, projectile.position)
-
-
-    for enemy in enemies:
-        gameDisplay.blit(enemy.surface, enemy.position)
-
-        if player.rect.colliderect(enemy.rect):
-            print("THAT'S A HIT")
-            # print("colliding")
-            player.position[0] = 100
-            player.position[1] = 150
-
-            enemy.position[1] = 10
-            enemy.position[0] = random.randint(0, width)
-        enemy.update(deltaTime)
-    # enemy.update(deltaTime)
-
-    player.update(deltaTime)
-    projectile.update(deltaTime)
+    game_manager.draw(gameDisplay)
+    game_manager.update(deltaTime)
     pygame.display.update()
-
-
-    # if player.position[1] <= enemy.position[1]:
 
     clock.tick(60)

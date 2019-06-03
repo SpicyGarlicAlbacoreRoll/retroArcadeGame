@@ -18,6 +18,8 @@ class GameObject:
         self.rect.x = self.position[0]
         self.rect.y = self.position[1]
 
+    def draw(self, game_screen):
+        game_screen.blit(self.surface, self.position)
 
 class Player(GameObject):
     def __init__(self, surface, position, screen, speed):
