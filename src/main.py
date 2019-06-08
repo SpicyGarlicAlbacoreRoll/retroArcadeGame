@@ -28,7 +28,7 @@ player = Player(playerShip, playerPos, display, playerSpeed)
 
 game_objects = [player]
 
-for n in range(10):
+for n in range(3):
     enemyShip = pygame.image.load('../assets/enemyShip00.png')
     enemyShip = pygame.transform.scale(enemyShip, (32, 32))
     randomSpeed = random.randint(50, 250)
@@ -36,11 +36,10 @@ for n in range(10):
     e = Enemy(enemyShip, [randomPosX, -128], display, randomSpeed)
     game_objects.append(e)
     
-projectileImg = pygame.image.load("../assets/projectile00.png")
-projectileImg = pygame.transform.scale(projectileImg, (16, 16))
-projectile = Projectile(projectileImg, [64, -128], display, 50, DEEP_BLUE)
 
-game_objects.append(projectile)
+# projectile = Projectile(projectileImg, [64, -128], display, 50, DEEP_BLUE)
+#
+# game_objects.append(projectile)
 
 game_manager = GameManager(game_objects, display)
 # main loop
