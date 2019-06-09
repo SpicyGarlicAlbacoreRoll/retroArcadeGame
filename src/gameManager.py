@@ -43,9 +43,8 @@ class GameManager:
             if self.player.rect.colliderect(enemy.rect):
                 print("Taking Damage!")
                 self.player.take_damage()
-
-                enemy.position[1] = 10
-                enemy.position[0] = random.randint(0, self.game_screen_width)
+                self.game_objects.remove(enemy)
+                print("enemies left: \t" + str(len(self.game_objects[1:])))
 
         i = 0
         for enemy in self.game_objects[1:]:
@@ -54,7 +53,7 @@ class GameManager:
                 if i != j:
                     if enemy.rect.colliderect(otherEnemy.rect):
                         print("TARGET HIT")
-                        otherEnemy.position[1] = 10
-                        otherEnemy.position[0] = self.game_screen_width
+                        self.game_objects.remove(otherEnemy)
+                        print("enemies left: \t" + str(len(self.game_objects[1:])))
                 j += 1
             i += 1

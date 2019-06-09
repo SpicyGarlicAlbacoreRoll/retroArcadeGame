@@ -19,7 +19,7 @@ WARM_WHITE = (255, 241, 215)
 DEEP_BLUE = (0, 20, 56)
 playerDim = [32, 32]
 enemyDim00 = [32, 32]
-playerPos = [20, 20]
+playerPos = [width/2 - 16, height - 64]
 getTicksLastFrame = 0
 
 playerShip = pygame.image.load('../assets/playerShip.png')
@@ -33,7 +33,7 @@ for n in range(3):
     enemyShip = pygame.transform.scale(enemyShip, (32, 32))
     randomSpeed = random.randint(50, 250)
     randomPosX = random.randint(0, width)
-    e = Enemy(enemyShip, [randomPosX, -128], display, randomSpeed)
+    e = Enemy(enemyShip, [randomPosX, -64], display, randomSpeed)
     game_objects.append(e)
     
 
