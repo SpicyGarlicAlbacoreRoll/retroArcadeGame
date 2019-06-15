@@ -1,5 +1,5 @@
 import pygame
-from gameObject import Projectile, Enemy
+from gameObject import Projectile, Enemy, Player
 import random
 
 
@@ -33,8 +33,13 @@ class GameManager:
             game_object.draw(game_screen)
 
     def create_projectile(self, game_object):
-        position = [game_object.position[0], game_object.position[1] - 32]
-        projectile = Projectile(game_object.projectileImg, position, game_object.screen, game_object.speed + 10, (255, 255, 255))
+        if isinstance(game_object, Player):
+            position = [game_object.position[0], game_object.position[1] - 32]
+            projectile = Projectile(game_object.projectileImg, position, game_object.screen, game_object.speed + 10, (255, 255, 255))
+        else:
+            position = [game_object.position[0], game_object.position[1] + 32]
+            projectile = Projectile(game_object.projectileImg, position, game_object.screen, -game_object.speed*1.5, (255, 255, 255))
+
         self.game_objects.append(projectile)
         game_object.isFiring = False
 
@@ -61,5 +66,5 @@ class GameManager:
 
         for projectile in self.game_objects[1:]:
             if isinstance(projectile, Projectile):
-                if not self.game_screen_height > projectile.position[1] > 0:
+                if not self.game_screen_height > projectile.position[1] > 128:
                     self.game_objects.remove(projectile)

@@ -78,10 +78,16 @@ class Enemy(GameObject):
     def __init__(self, surface, position, screen, speed):
         GameObject.__init__(self, surface, position, screen)
         self.speed = speed
+        self.projectileImg = pygame.image.load("../assets/projectile00.png")
+        self.projectileImg = pygame.transform.scale(self.projectileImg, (16, 16))
+        self.projectileCoolDownTime = 2
+        self.projectileCoolDownStopWatch = self.projectileCoolDownTime
 
     def update(self, dt):
         GameObject.update(self, dt)
         self.position[1] += self.speed * dt
+        if self.projectileCoolDownStopWatch == self.projectileCoolDownTime:
+            self.fire(dt)
 
         if self.position[1] > self.screen[1]:
             self.position[1] = -128
