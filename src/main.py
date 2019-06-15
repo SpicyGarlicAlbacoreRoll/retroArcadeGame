@@ -13,10 +13,24 @@ running = True
 
 playerSpeed = 500
 
+
+def text_objects(text, font):
+    textSurface = font.render(text, True, SKY_BLUE)
+    return textSurface, textSurface.get_rect()
+
+def message_display(text, pos):
+    largeText = pygame.font.Font('freesansbold.ttf',20)
+    TextSurf, TextRect = text_objects(text, largeText)
+    TextRect.center = (pos)
+    gameDisplay.blit(TextSurf, TextRect)
+
+    pygame.display.update()
+
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 WARM_WHITE = (255, 241, 215)
 DEEP_BLUE = (0, 20, 56)
+SKY_BLUE = (0, 205, 255)
 playerDim = [32, 32]
 enemyDim00 = [32, 32]
 playerPos = [width/2 - 16, height - 64]
@@ -67,6 +81,7 @@ while running:
     gameDisplay.blit(backgroundClouds, (0, bgPosy2))
     game_manager.draw(gameDisplay)
     game_manager.update(deltaTime)
+    message_display('Health', (48, 22), )
     pygame.display.update()
 
     clock.tick(60)

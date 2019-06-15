@@ -58,3 +58,8 @@ class GameManager:
                         print("enemies left: \t" + str(len(self.game_objects[1:])))
                 j += 1
             i += 1
+
+        for projectile in self.game_objects[1:]:
+            if isinstance(projectile, Projectile):
+                if not self.game_screen_height > projectile.position[1] > 0:
+                    self.game_objects.remove(projectile)
