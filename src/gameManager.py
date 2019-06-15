@@ -1,5 +1,5 @@
 import pygame
-from gameObject import Projectile
+from gameObject import Projectile, Enemy
 import random
 
 
@@ -49,11 +49,12 @@ class GameManager:
         i = 0
         for enemy in self.game_objects[1:]:
             j = 0
-            for otherEnemy in self.game_objects[1:]:
-                if i != j:
-                    if enemy.rect.colliderect(otherEnemy.rect):
+            for otherGameObject in self.game_objects[1:]:
+                if isinstance(otherGameObject, Enemy) and isinstance(enemy, Projectile):
+                    if enemy.rect.colliderect(otherGameObject.rect):
                         print("TARGET HIT")
-                        self.game_objects.remove(otherEnemy)
+                        self.game_objects.remove(otherGameObject)
+                        self.game_objects.remove(enemy)
                         print("enemies left: \t" + str(len(self.game_objects[1:])))
                 j += 1
             i += 1
