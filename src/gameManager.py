@@ -13,18 +13,28 @@ class GameManager:
         self.game_screen_height = game_screen[1]
         self.gameOver = False
         self.update_enemy_count()
+        self.winFlag = False
+        self.gameOver = False
 
     def add_game_object(self, game_object):
         self.game_objects.append(game_object)
 
     def update(self, dt):
-        if not self.player.isAlive:
+        if self.enemyCount == 0 and self.winFlag and not self.gameOver:
+            print("\nY O U\tW I N!\n")
+            print("G A M E O V E R")
+            for game_object in self.game_objects[1:]:
+                self.game_objects.remove(game_object)
+            self.winFlag = False
             self.gameOver = True
-        for game_object in self.game_objects:
-            game_object.update(dt)
+        else:
+            if not self.player.isAlive:
+                self.gameOver = True
+            for game_object in self.game_objects:
+                game_object.update(dt)
 
-            if game_object.isFiring:
-                self.create_projectile(game_object)
+                if game_object.isFiring:
+                    self.create_projectile(game_object)
 
         if not self.gameOver:
             self.physics()
@@ -49,9 +59,8 @@ class GameManager:
         for game_object in self.game_objects:
             if isinstance(game_object, Enemy):
                 self.enemyCount += 1
-
-
-
+        if self.enemyCount == 0:
+            self.winFlag = True
 
     def physics(self):
         for enemy in self.game_objects[1:]:

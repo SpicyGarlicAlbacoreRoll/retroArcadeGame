@@ -46,7 +46,7 @@ for n in range(5):
     enemyShip = pygame.image.load('../assets/enemyShip00.png')
     enemyShip = pygame.transform.scale(enemyShip, (32, 32))
     randomSpeed = random.randint(50, 250)
-    randomPosX = random.randint(0, width)
+    randomPosX = random.randint(64, width - 64)
     e = Enemy(enemyShip, [randomPosX, -64], display, randomSpeed)
     game_objects.append(e)
     
