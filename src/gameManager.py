@@ -12,6 +12,7 @@ class GameManager:
         self.game_screen_width = game_screen[0]
         self.game_screen_height = game_screen[1]
         self.gameOver = False
+        self.update_enemy_count()
 
     def add_game_object(self, game_object):
         self.game_objects.append(game_object)
@@ -43,13 +44,23 @@ class GameManager:
         self.game_objects.append(projectile)
         game_object.isFiring = False
 
+    def update_enemy_count(self):
+        self.enemyCount = 0
+        for game_object in self.game_objects:
+            if isinstance(game_object, Enemy):
+                self.enemyCount += 1
+
+
+
+
     def physics(self):
         for enemy in self.game_objects[1:]:
             if self.player.rect.colliderect(enemy.rect):
                 print("Taking Damage!")
                 self.player.take_damage()
                 self.game_objects.remove(enemy)
-                print("enemies left: \t" + str(len(self.game_objects[1:])))
+                self.update_enemy_count()
+                print("enemies left: \t" + str(self.enemyCount))
 
         i = 0
         for enemy in self.game_objects[1:]:
@@ -60,7 +71,9 @@ class GameManager:
                         print("TARGET HIT")
                         self.game_objects.remove(otherGameObject)
                         self.game_objects.remove(enemy)
-                        print("enemies left: \t" + str(len(self.game_objects[1:])))
+                        self.update_enemy_count()
+                        print("enemies left: \t" + str(self.enemyCount))
+
                 j += 1
             i += 1
 
